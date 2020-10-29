@@ -1,0 +1,59 @@
+---
+# File: ../tasks/setup-debian.yml
+# Debian setup tasks file
+
+# http://docs.ansible.com/ansible/latest/apt_module.html
+- name: setup | Install the Apache mod_security2 module
+  apt:
+    name: "{{ _module_packages }}"
+    update_cache: yes
+    state: latest
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-install-module
+
+# http://docs.ansible.com/ansible/latest/apache2_module_module.html
+- name: setup | Enable mod_security2
+  apache2_module:
+    name: security2
+    state: present
+  notify:
+   - restart apache
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-enable-module
+
+# http://docs.ansible.com/ansible/latest/template_module.html
+- name: setup | Deploy modsecurity.conf file
+  template:
+    src: "modsecurity.conf.j2"
+    dest: "{{ _apache_conf_dir }}/mod_security.conf"
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-deploy-config
+
+# a2enconf modsecurity.conf
+- name: setup | Enable mod_security2 config file
+  command: "a2enconf mod_security.conf"
+  notify:
+   - restart apache
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-enable-config
+
+- name: setup | Copy unicode mapping file
+  copy:
+    src: "{{ apache_modsecurity.paths.files.unicode_mapping }}"
+    dest: "{{ apache_modsecurity.paths.directories.apache_conf }}/unicode.mapping"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart apache
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-copy-mapping

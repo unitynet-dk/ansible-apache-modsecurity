@@ -1,0 +1,17 @@
+---
+# File: .../defaults/main.yml
+# Default vars filer for apache-modsecurity
+
+apache_modsecurity:
+  paths:
+    files:
+      audit_log: "{{ _sec_audit_log }}"
+      unicode_mapping: /etc/modsecurity/unicode.mapping
+    directories:
+      apache_conf: "{{ _apache_conf_dir }}"
+  config:
+    ## On, Off, DetectionOnly
+    sec_rule_engine: DetectionOnly
+    sec_server_signature: "Apache 7000"
+    sec_rule_remove_by_id: "960017,970901,960015"
+    # 981203,981184,981185,981186,981205,960015,981143,950109,960032,981220,981222,970901,960017,960010,981060

@@ -1,0 +1,8 @@
+---
+# File: ../handlers/main.yml
+# Handlers file for apache-modsecurity
+
+- name: restart apache
+  service:
+    name: "{{ _apache_service_daemon }}"
+    state: restarted

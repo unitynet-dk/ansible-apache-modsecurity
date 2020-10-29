@@ -1,0 +1,8 @@
+---
+# File: ../vars/debian.yml
+# Debian vars file for apache-modsecurity
+
+_apache_service_daemon: apache2
+_apache_conf_dir: "/etc/apache2/conf-available/"
+_module_packages:
+  - libapache2-mod-security2

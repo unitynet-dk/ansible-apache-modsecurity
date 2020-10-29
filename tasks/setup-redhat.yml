@@ -1,0 +1,45 @@
+---
+# File: ../tasks/setup-redhat.yml
+# RedHat setup tasks file
+
+# http://docs.ansible.com/ansible/latest/apt_module.html
+- name: setup | Install the Apache mod_security2 module
+  yum:
+    name: "{{ _module_packages }}"
+    update_cache: yes
+    state: latest
+
+# http://docs.ansible.com/ansible/latest/template_module.html
+ - name: setup | Deploy modsecurity.conf file
+   template:
+     src: "modsecurity.conf.j2"
+     dest: "{{ _apache_conf_dir }}/mod_security.conf"
+     owner: root
+     group: root
+     mode: 0644
+
+# check if module mod_security.conf is enabled
+- name: setup | Enable mod_security2 config file
+  stat:
+    path: /etc/httpd/conf.modules.d/10-mod_security.conf
+  register: modsec
+
+- name: setup | Restart apache if mod_security.conf is enabled just in case
+  service:
+    name: "{{ _apache_service_daemon }}"
+    state: restarted
+  when: modsec.stat.exists is defined and modsec.stat.exists
+
+- name: setup | Copy unicode mapping file
+  copy:
+    src: "{{ apache_modsecurity.paths.file.unicode_mapping }}"
+    dest: "{{ apache_modsecurity.paths.directories.apache_conf }}/unicode.mapping"
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart apache
+  tags:
+    - apache-modsecurity-setup
+    - apache-modsecurity-setup-copy-mapping

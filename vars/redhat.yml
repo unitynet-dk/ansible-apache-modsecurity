@@ -1,0 +1,9 @@
+---
+# File: ../vars/redhat.yml
+# RedHat vars file for apache-modsecurity
+
+_apache_service_daemon: httpd
+_apache_conf_dir: "/etc/httpd/conf.d/"
+_module_packages:
+  - mod_security
+  - mod_security_crs

@@ -1,0 +1,23 @@
+---
+## Variables for modsecurity are based on the recommended set by
+## https://github.com/SpiderLabs/ModSecurity/blob/v2/master/modsecurity.conf-recommended
+
+_sec_request_body_access: 'On'
+_sec_request_body_limit: 13107200
+_sec_request_body_no_files_limit: 131072
+_sec_request_body_in_memory_limit: 131072
+_sec_request_body_limit_action: Reject
+_sec_response_body_access: 'On'
+_sec_response_body_mime_type: "text/plain text/html text/xml"
+_sec_response_body_limit: 524288
+_sec_response_body_limit_action: ProcessPartial
+
+_sec_tmp_dir: /tmp/
+_sec_data_dir: /tmp/
+
+_sec_audit_engine: RelevantOnly
+_sec_audit_log_parts: ABIJDEFHZ
+_sec_audit_log_type: Serial
+_sec_audit_log: /var/log/modsec_audit.log
+
+_sec_status_engine: 'On'
