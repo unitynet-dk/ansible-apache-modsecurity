@@ -32,7 +32,7 @@
 
 - name: setup | Copy unicode mapping file
   copy:
-    src: "{{ apache_modsecurity.paths.file.unicode_mapping }}"
+    src: "{{ apache_modsecurity.paths.files.unicode_mapping }}"
     dest: "{{ apache_modsecurity.paths.directories.apache_conf }}/unicode.mapping"
     remote_src: yes
     owner: root

@@ -1,2 +1,33 @@
 ---
 # File: ../meta/main.yml
+# Meta file for apache-modsecurity
+
+galaxy_info:
+  role_name: apache-modsecurity
+  author: Søren Sjøstrøm
+  company: Unitynet
+  description: Install and configure Apache mod_security2 module
+  license: MIT
+  min_ansible_version: 2.6.0
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - precise
+        - trusty
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+        - stretch
+        - buster
+  galaxy_tags:
+    - web
+dependencies: []
