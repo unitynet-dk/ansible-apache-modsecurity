@@ -11,7 +11,13 @@ apache_modsecurity:
       apache_conf: "{{ _apache_conf_dir }}"
   config:
     ## On, Off, DetectionOnly
-    sec_rule_engine: DetectionOnly
-    sec_server_signature: "Apache 7000"
-    sec_rule_remove_by_id: "960017,970901,960015"
-    # 981203,981184,981185,981186,981205,960015,981143,950109,960032,981220,981222,970901,960017,960010,981060
+    rule_engine: DetectionOnly
+    request_body_access: "{{ _sec_request_body_access }}"
+    request_body_limit: "{{ _sec_request_body_limit }}"
+    request_body_no_files_limit: "{{ _sec_request_body_no_files_limit }}"
+    request_body_in_memory_limit: "{{ _sec_request_body_in_memory_limit }}"
+    request_body_limit_action: "{{ _sec_request_body_limit_action }}"
+    response_body_access: "{{ _sec_response_body_access }}"
+    response_body_mime_type: "{{ _sec_response_body_mime_type }}"
+    response_body_limit: "{{ _sec_response_body_limit }}"
+    response_body_limit_action: "{{ _sec_response_body_limit_action }}"

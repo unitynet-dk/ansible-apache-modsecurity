@@ -8,7 +8,7 @@
 # only to start with, because that minimizes the chances of post-installation
 # disruption.
 #
-SecRuleEngine {{ apache_modsecurity.config.sec_rule_engine }}
+SecRuleEngine {{ apache_modsecurity.config.rule_engine }}
 
 
 # -- Request body handling ---------------------------------------------------
@@ -17,7 +17,7 @@ SecRuleEngine {{ apache_modsecurity.config.sec_rule_engine }}
 # won't be able to see any POST parameters, which opens a large security
 # hole for attackers to exploit.
 #
-SecRequestBodyAccess {{ _sec_request_body_access }}
+SecRequestBodyAccess {{ apache_modsecurity.config.request_body_access }}
 
 
 # Enable XML request body parser.
@@ -39,21 +39,21 @@ SecRule REQUEST_HEADERS:Content-Type "application/json" \
 # to the size of data, with files excluded. You want to keep that value as
 # low as practical.
 #
-SecRequestBodyLimit {{ _sec_request_body_limit }}
-SecRequestBodyNoFilesLimit {{ _sec_request_body_no_files_limit }}
+SecRequestBodyLimit {{ apache_modsecurity.config.request_body_limit }}
+SecRequestBodyNoFilesLimit {{ apache_modsecurity.config.request_body_no_files_limit }}
 
 # Store up to 128 KB of request body data in memory. When the multipart
 # parser reaches this limit, it will start using your hard disk for
 # storage. That is slow, but unavoidable.
 #
-SecRequestBodyInMemoryLimit {{ _sec_request_body_in_memory_limit }}
+SecRequestBodyInMemoryLimit {{ apache_modsecurity.config.request_body_in_memory_limit }}
 
 # What do do if the request body size is above our configured limit.
 # Keep in mind that this setting will automatically be set to ProcessPartial
 # when SecRuleEngine is set to DetectionOnly mode in order to minimize
 # disruptions when initially deploying ModSecurity.
 #
-SecRequestBodyLimitAction {{ _sec_request_body_limit_action }}
+SecRequestBodyLimitAction {{ apache_modsecurity.config.request_body_limit_action }}
 
 # Verify that we've correctly processed the request body.
 # As a rule of thumb, when failing to process a request body
@@ -113,22 +113,22 @@ SecRule TX:/^MSC_/ "!@streq 0" \
 # Do keep in mind that enabling this directive does increases both
 # memory consumption and response latency.
 #
-SecResponseBodyAccess {{ _sec_response_body_access }}
+SecResponseBodyAccess {{ apache_modsecurity.config.response_body_access }}
 
 # Which response MIME types do you want to inspect? You should adjust the
 # configuration below to catch documents but avoid static files
 # (e.g., images and archives).
 #
-SecResponseBodyMimeType {{ _sec_response_body_mime_type }}
+SecResponseBodyMimeType {{ apache_modsecurity.config.response_body_mime_type }}
 
 # Buffer response bodies of up to 512 KB in length.
-SecResponseBodyLimit {{ _sec_response_body_limit }}
+SecResponseBodyLimit {{ apache_modsecurity.config.response_body_limit }}
 
 # What happens when we encounter a response body larger than the configured
 # limit? By default, we process what we have and let the rest through.
 # That's somewhat less secure, but does not break any legitimate pages.
 #
-SecResponseBodyLimitAction {{ _sec_response_body_limit_action }}
+SecResponseBodyLimitAction {{ apache_modsecurity.config.response_body_limit_action }}
 
 
 # -- Filesystem configuration ------------------------------------------------

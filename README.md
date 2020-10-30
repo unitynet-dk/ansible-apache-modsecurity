@@ -1,14 +1,12 @@
-# ansible-apache-modsecurity
-
-Install and configure Apache mod_security2 module.
-
-Ansible Role: apache-modsecurity
+# Ansible Role: apache-modsecurity
 
 Ansible Role to install and configure Apache mod_security2 in Ubuntu, Debian or Red Hat based distributions.
-Requirements
+
+# Requirements
 
 None.
-Role Variables
+
+# Role Variables
 
 Most common variables are listed below, the (mostly) immutable ones are in defaults/main.yml and the recommended settings are in var/main.yml, this last file would be the one to edit. There are also a couple of templates for the modsecurity.conf file, a minimal one and a recommended by mod_security itself.
 
@@ -23,7 +21,7 @@ Enable mod_security in detection only mode, you should change this to On once yo
 
 SecRuleEngine: DetectionOnly
 
-Request rules:
+# Request rules:
 
 SecRequestBodyAccess: On
 SecRequestBodyLimit: 13107200
@@ -40,7 +38,7 @@ Temporary and permanent data stores:
 SecTmpDir: /tmp/
 SecDataDir: /tmp/
 
-Log settins:
+# Log settins:
 
 SecAuditEngine: RelevantOnly
 SecAuditLogParts: ABIJDEFHZ
@@ -51,7 +49,7 @@ Share status with mod_security developers:
 
 SecStatusEngine: On
 
-Dependencies
+# Dependencies
 
 Must have installed Apache. Suggested role:
 
@@ -61,7 +59,7 @@ For Red Hat and CentOS the EPEL repository is necessary:
 
 geerlingguy.epel
 
-Example Playbook
+# Example Playbook
 
 - hosts: all
   roles:
